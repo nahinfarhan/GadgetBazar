@@ -6,6 +6,7 @@ import Homepage from './components/home/Homepage';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Profile from './components/profile/Profile';
+import ProductDetail from './components/product/ProductDetail';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -23,6 +24,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Homepage user={user} />} />
+          <Route path="/product/:id" element={<ProductDetail user={user} />} />
           <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/login" />} />
           <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
           <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />

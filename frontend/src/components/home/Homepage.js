@@ -69,16 +69,19 @@ const Homepage = ({ user }) => {
               { name: 'Smart Watch Pro', price: 'BDT 8,500' },
               { name: 'Bluetooth Headphones', price: 'BDT 1,800' },
               { name: 'Gaming Mouse RGB', price: 'BDT 1,200' }
-            ].map(product => (
+            ].map((product, index) => (
               <div key={product.name} className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="h-48 bg-gray-200"></div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-800 mb-2">{product.name}</h3>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-blue-600">{product.price}</span>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                      Add to Cart
-                    </button>
+                    <a 
+                      href={`/product/${index + 1}`}
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center"
+                    >
+                      View Details
+                    </a>
                   </div>
                 </div>
               </div>
