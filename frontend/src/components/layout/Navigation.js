@@ -1,54 +1,194 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../config/firebase';
+import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import InfoIcon from '@mui/icons-material/Info';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import LaptopIcon from '@mui/icons-material/Laptop';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import WatchIcon from '@mui/icons-material/Watch';
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 const Navigation = () => {
+  const [user] = useAuthState(auth);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
   const categories = [
-    { name: 'Smartphones', path: '/category/smartphones' },
-    { name: 'Laptops', path: '/category/laptops' },
-    { name: 'Tablets', path: '/category/tablets' },
-    { name: 'Accessories', path: '/category/accessories' },
-    { name: 'Gaming', path: '/category/gaming' },
-    { name: 'Audio', path: '/category/audio' }
+    { icon: PhoneAndroidIcon, name: 'Smartphones', path: '/category/smartphones' },
+    { icon: LaptopIcon, name: 'Laptops', path: '/category/laptops' },
+    { icon: HeadphonesIcon, name: 'Audio', path: '/category/audio' },
+    { icon: SportsEsportsIcon, name: 'Gaming', path: '/category/gaming' },
+    { icon: WatchIcon, name: 'Wearables', path: '/category/wearables' },
   ];
 
+  const userMenuItems = user ? [
+    { icon: PersonIcon, label: 'Profile', path: '/profile' },
+    { icon: ShoppingCartIcon, label: 'Cart', path: '/cart' },
+    { icon: FavoriteIcon, label: 'Wishlist', path: '/wishlist' },
+    { icon: LocalShippingIcon, label: 'Orders', path: '/orders' },
+  ] : [];
+
   return (
-    <nav className="bg-gray-100 border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-          <div className="flex space-x-8">
-            <Link
-              to="/"
-              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+    <>
+      <nav className="bg-white/50 backdrop-blur-lg border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14">
+            {/* Menu Button */}
+            <button
+              onMouseEnter={() => setIsSidebarOpen(true)}
+              className="bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-lg text-white px-4 py-2 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-white/30 flex items-center space-x-2"
             >
-              Home
-            </Link>
-            {categories.map((category) => (
+              <MenuIcon />
+              <span className="font-medium">Menu</span>
+            </button>
+
+            {/* Center Buttons */}
+            <div className="flex space-x-3">
               <Link
-                key={category.name}
-                to={category.path}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+                to="/"
+                className="bg-white/60 backdrop-blur-lg text-gray-700 hover:text-blue-600 px-4 py-2 rounded-2xl text-sm font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 border border-white/30 flex items-center space-x-1"
               >
-                {category.name}
+                <HomeIcon fontSize="small" />
+                <span>Home</span>
               </Link>
-            ))}
-          </div>
-          <div className="flex space-x-4">
-            <Link
-              to="/deals"
-              className="text-red-600 hover:text-red-800 px-3 py-2 text-sm font-medium"
-            >
-              Hot Deals
-            </Link>
-            <Link
-              to="/support"
-              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
-            >
-              Support
-            </Link>
+              <Link
+                to="/products"
+                className="bg-white/60 backdrop-blur-lg text-gray-700 hover:text-blue-600 px-4 py-2 rounded-2xl text-sm font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 border border-white/30 flex items-center space-x-1"
+              >
+                <ShoppingBagIcon fontSize="small" />
+                <span>All Products</span>
+              </Link>
+              <Link
+                to="/deals"
+                className="bg-gradient-to-r from-red-500/80 to-orange-500/80 backdrop-blur-lg text-white px-4 py-2 rounded-2xl text-sm font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border border-white/30 flex items-center space-x-1"
+              >
+                <LocalFireDepartmentIcon fontSize="small" />
+                <span>Hot Deals</span>
+              </Link>
+            </div>
+
+            {/* Right Buttons */}
+            <div className="flex space-x-3">
+              <Link
+                to="/support"
+                className="bg-white/60 backdrop-blur-lg text-gray-700 hover:text-blue-600 px-4 py-2 rounded-2xl text-sm font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 border border-white/30 flex items-center space-x-1"
+              >
+                <SupportAgentIcon fontSize="small" />
+                <span>Support</span>
+              </Link>
+              <Link
+                to="/about"
+                className="bg-white/60 backdrop-blur-lg text-gray-700 hover:text-blue-600 px-4 py-2 rounded-2xl text-sm font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 border border-white/30 flex items-center space-x-1"
+              >
+                <InfoIcon fontSize="small" />
+                <span>About</span>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Backdrop */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        onMouseLeave={() => setIsSidebarOpen(false)}
+        className={`w-72 bg-white/90 backdrop-blur-xl border-r border-white/20 h-full fixed left-0 top-28 bottom-0 overflow-y-auto shadow-2xl z-50 transition-transform duration-300 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="p-6">
+          {/* Categories */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Categories</h3>
+            <nav className="space-y-1">
+              {categories.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center px-4 py-3 rounded-2xl transition-all duration-200 ${
+                      isActive(item.path)
+                        ? 'bg-blue-500/20 backdrop-blur-lg text-blue-600 font-medium shadow-lg'
+                        : 'text-gray-700 hover:bg-white/50 hover:backdrop-blur-lg hover:text-blue-600 hover:shadow-md'
+                    } transform hover:translate-x-2`}
+                  >
+                    <IconComponent className="mr-3" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* User Menu */}
+          {user && (
+            <div className="mb-6">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">My Account</h3>
+              <nav className="space-y-1">
+                {userMenuItems.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center px-4 py-3 rounded-2xl transition-all duration-200 ${
+                        isActive(item.path)
+                          ? 'bg-blue-500/20 backdrop-blur-lg text-blue-600 font-medium shadow-lg'
+                          : 'text-gray-700 hover:bg-white/50 hover:backdrop-blur-lg hover:text-blue-600 hover:shadow-md'
+                      } transform hover:translate-x-2`}
+                    >
+                      <IconComponent className="mr-3" />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Quick Links</h3>
+            <nav className="space-y-1">
+              <Link
+                to="/deals"
+                className="flex items-center px-4 py-3 rounded-2xl text-red-600 hover:bg-red-500/10 hover:backdrop-blur-lg hover:shadow-md transition-all duration-200 transform hover:translate-x-2"
+              >
+                <LocalFireDepartmentIcon className="mr-3" />
+                <span className="font-medium">Hot Deals</span>
+              </Link>
+              <Link
+                to="/support"
+                className="flex items-center px-4 py-3 rounded-2xl text-gray-700 hover:bg-white/50 hover:backdrop-blur-lg hover:text-blue-600 hover:shadow-md transition-all duration-200 transform hover:translate-x-2"
+              >
+                <SupportAgentIcon className="mr-3" />
+                <span>Support</span>
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };
 

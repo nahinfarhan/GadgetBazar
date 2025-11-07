@@ -8,6 +8,8 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Profile from './components/profile/Profile';
 import ProductDetail from './components/product/ProductDetail';
+import ProductCatalog from './components/catalog/ProductCatalog';
+import SearchResults from './components/catalog/SearchResults';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -35,6 +37,9 @@ function App() {
                 <Route path="/" element={<Homepage user={user} />} />
                 <Route path="/product/:id" element={<ProductDetail user={user} />} />
                 <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/login" />} />
+                <Route path="/category/:category" element={<ProductCatalog />} />
+                <Route path="/products" element={<ProductCatalog />} />
+                <Route path="/search" element={<SearchResults />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </Layout>

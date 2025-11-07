@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { auth } from '../../config/firebase';
 
 const ProductDetail = ({ user }) => {
   const { id } = useParams();
@@ -40,10 +39,6 @@ const ProductDetail = ({ user }) => {
     ]
   };
 
-  const handleLogout = () => {
-    auth.signOut();
-  };
-
   const handleAddToCart = () => {
     if (!user) {
       alert('Please login to add items to cart');
@@ -65,39 +60,10 @@ const ProductDetail = ({ user }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <a href="/" className="text-2xl font-bold text-blue-600">GadgetBazar</a>
-            <nav className="flex items-center space-x-4">
-              <a href="/" className="text-gray-700 hover:text-blue-600">Home</a>
-              {user ? (
-                <>
-                  <span className="text-gray-700">Welcome, {user.displayName || user.email}!</span>
-                  <a href="/profile" className="text-gray-700 hover:text-blue-600">My Profile</a>
-                  <button 
-                    onClick={handleLogout}
-                    className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <a href="/login" className="text-gray-700 hover:text-blue-600">Login</a>
-                  <a href="/signup" className="bg-blue-600 text-white px-4 py-2 rounded">Sign Up</a>
-                </>
-              )}
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
         {/* Breadcrumb */}
-        <nav className="mb-8">
+        <nav className="mb-8 animate-slide-up">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">
             <li><a href="/" className="hover:text-blue-600">Home</a></li>
             <li>/</li>
@@ -109,12 +75,12 @@ const ProductDetail = ({ user }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
-          <div>
-            <div className="mb-4">
+          <div className="animate-scale-in">
+            <div className="mb-4 overflow-hidden rounded-lg">
               <img
                 src={product.images[selectedImage]}
                 alt={product.name}
-                className="w-full h-96 object-cover rounded-lg"
+                className="w-full h-96 object-cover rounded-lg transform hover:scale-105 transition-transform duration-500"
               />
             </div>
             <div className="flex space-x-2">
@@ -122,8 +88,8 @@ const ProductDetail = ({ user }) => {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                    selectedImage === index ? 'border-blue-600' : 'border-gray-200'
+                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transform hover:scale-110 transition-all duration-200 ${
+                    selectedImage === index ? 'border-blue-600 scale-105' : 'border-gray-200'
                   }`}
                 >
                   <img src={image} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
@@ -133,8 +99,8 @@ const ProductDetail = ({ user }) => {
           </div>
 
           {/* Product Info */}
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
+          <div className="animate-slide-up">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in">{product.name}</h1>
             
             {/* Rating */}
             <div className="flex items-center mb-4">
@@ -196,13 +162,13 @@ const ProductDetail = ({ user }) => {
                 <button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
-                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="flex-1 bg-blue-600/90 backdrop-blur-lg text-white py-3 px-6 rounded-2xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-200 hover:shadow-xl border border-white/20"
                 >
                   {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                 </button>
                 <button
                   onClick={handleAddToWishlist}
-                  className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-6 py-3 bg-white/50 backdrop-blur-lg border border-white/30 rounded-2xl hover:bg-white/80 transform hover:scale-105 transition-all duration-200 hover:shadow-xl"
                 >
                   ♡ Wishlist
                 </button>
@@ -222,11 +188,11 @@ const ProductDetail = ({ user }) => {
         </div>
 
         {/* Specifications */}
-        <div className="mt-12 bg-white rounded-lg shadow p-6">
+        <div className="mt-12 bg-white/60 backdrop-blur-xl rounded-3xl shadow-xl p-6 animate-fade-in hover:shadow-2xl transition-shadow duration-300 border border-white/30">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Specifications</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(product.specifications).map(([key, value]) => (
-              <div key={key} className="flex justify-between py-2 border-b border-gray-200">
+            {Object.entries(product.specifications).map(([key, value], index) => (
+              <div key={key} className="flex justify-between py-2 border-b border-gray-200 hover:bg-gray-50 px-2 rounded transition-colors duration-200 animate-slide-up" style={{animationDelay: `${index * 0.05}s`}}>
                 <span className="font-medium text-gray-700">{key}:</span>
                 <span className="text-gray-900">{value}</span>
               </div>

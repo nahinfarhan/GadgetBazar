@@ -3,6 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -26,11 +32,11 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white/70 backdrop-blur-xl shadow-lg border-b border-white/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-16 animate-fade-in">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center transform hover:scale-105 transition-transform duration-300">
             <img src="/Logo_GadgetBazar.png" alt="GadgetBazar" className="h-10 w-auto" />
           </Link>
 
@@ -42,15 +48,13 @@ const Header = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 bg-white/50 backdrop-blur-lg border border-white/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/80 transition-all duration-300 shadow-sm"
               />
               <button
                 type="submit"
                 className="absolute right-2 top-2 text-gray-400 hover:text-blue-600"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <SearchIcon />
               </button>
             </div>
           </form>
@@ -59,40 +63,29 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <Link to="/cart" className="text-gray-600 hover:text-blue-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z" />
-                  </svg>
+                <Link to="/cart" className="text-gray-600 hover:text-blue-600 transform hover:scale-110 transition-transform duration-200" title="Cart">
+                  <ShoppingCartIcon />
                 </Link>
-                <Link to="/profile" className="text-gray-600 hover:text-blue-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+                <Link to="/profile" className="text-gray-600 hover:text-blue-600 transform hover:scale-110 transition-transform duration-200" title="Profile">
+                  <PersonIcon />
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-red-600"
+                  className="text-gray-600 hover:text-red-600 transform hover:scale-110 transition-transform duration-200"
+                  title="Logout"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
+                  <LogoutIcon />
                 </button>
               </>
             ) : (
-              <div className="flex space-x-2">
-                <Link
-                  to="/login"
-                  className="px-4 py-2 text-blue-600 hover:text-blue-800"
-                >
-                  Login
+              <>
+                <Link to="/login" className="text-gray-600 hover:text-blue-600 transform hover:scale-110 transition-transform duration-200" title="Login">
+                  <LoginIcon />
                 </Link>
-                <Link
-                  to="/signup"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                  Sign Up
+                <Link to="/signup" className="text-gray-600 hover:text-blue-600 transform hover:scale-110 transition-transform duration-200" title="Sign Up">
+                  <PersonAddIcon />
                 </Link>
-              </div>
+              </>
             )}
           </div>
         </div>

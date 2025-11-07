@@ -44,10 +44,6 @@ const Profile = ({ user }) => {
     }
   };
 
-  const handleLogout = () => {
-    auth.signOut();
-  };
-
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -58,13 +54,13 @@ const Profile = ({ user }) => {
 
   return (
     <div className="bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+        <div className="bg-white/60 backdrop-blur-xl rounded-3xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300 animate-scale-in border border-white/30">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transform hover:scale-105 transition-all duration-200"
             >
               {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
@@ -119,7 +115,7 @@ const Profile = ({ user }) => {
 
               <button
                 type="submit"
-                className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+                className="bg-green-600/90 backdrop-blur-lg text-white px-6 py-2 rounded-2xl hover:bg-green-700 transform hover:scale-105 transition-all duration-200 hover:shadow-xl border border-white/20"
               >
                 Save Changes
               </button>
@@ -150,23 +146,23 @@ const Profile = ({ user }) => {
         </div>
 
         {/* Account Activity Section */}
-        <div className="bg-white rounded-lg shadow p-6 mt-6">
+        <div className="bg-white/60 backdrop-blur-xl rounded-3xl shadow-xl p-6 mt-6 hover:shadow-2xl transition-shadow duration-300 animate-slide-up border border-white/30">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Account Activity</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-blue-900">Orders</h3>
+            <div className="bg-blue-50/60 backdrop-blur-lg p-4 rounded-2xl hover-lift cursor-pointer group border border-blue-100/50">
+              <h3 className="font-semibold text-blue-900 group-hover:text-blue-700 transition-colors">Orders</h3>
               <p className="text-2xl font-bold text-blue-600">0</p>
               <p className="text-sm text-blue-700">Total orders placed</p>
             </div>
             
-            <div className="bg-green-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-green-900">Wishlist</h3>
+            <div className="bg-green-50/60 backdrop-blur-lg p-4 rounded-2xl hover-lift cursor-pointer group border border-green-100/50">
+              <h3 className="font-semibold text-green-900 group-hover:text-green-700 transition-colors">Wishlist</h3>
               <p className="text-2xl font-bold text-green-600">0</p>
               <p className="text-sm text-green-700">Items in wishlist</p>
             </div>
             
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-purple-900">Reviews</h3>
+            <div className="bg-purple-50/60 backdrop-blur-lg p-4 rounded-2xl hover-lift cursor-pointer group border border-purple-100/50">
+              <h3 className="font-semibold text-purple-900 group-hover:text-purple-700 transition-colors">Reviews</h3>
               <p className="text-2xl font-bold text-purple-600">0</p>
               <p className="text-sm text-purple-700">Products reviewed</p>
             </div>
@@ -174,25 +170,25 @@ const Profile = ({ user }) => {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-lg shadow p-6 mt-6">
+        <div className="bg-white/60 backdrop-blur-xl rounded-3xl shadow-xl p-6 mt-6 hover:shadow-2xl transition-shadow duration-300 animate-slide-up border border-white/30" style={{animationDelay: '0.2s'}}>
           <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button className="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+            <button className="bg-blue-600/90 backdrop-blur-lg text-white p-4 rounded-2xl hover:bg-blue-700 text-left transform hover:scale-105 hover:shadow-xl transition-all duration-200 border border-white/20">
               <h3 className="font-semibold">View Orders</h3>
               <p className="text-sm opacity-90">Check your order history and status</p>
             </button>
             
-            <button className="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 text-left">
+            <button className="bg-green-600/90 backdrop-blur-lg text-white p-4 rounded-2xl hover:bg-green-700 text-left transform hover:scale-105 hover:shadow-xl transition-all duration-200 border border-white/20">
               <h3 className="font-semibold">My Wishlist</h3>
               <p className="text-sm opacity-90">View saved products</p>
             </button>
             
-            <button className="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 text-left">
+            <button className="bg-purple-600/90 backdrop-blur-lg text-white p-4 rounded-2xl hover:bg-purple-700 text-left transform hover:scale-105 hover:shadow-xl transition-all duration-200 border border-white/20">
               <h3 className="font-semibold">Address Book</h3>
               <p className="text-sm opacity-90">Manage shipping addresses</p>
             </button>
             
-            <button className="bg-orange-600 text-white p-4 rounded-lg hover:bg-orange-700 text-left">
+            <button className="bg-orange-600/90 backdrop-blur-lg text-white p-4 rounded-2xl hover:bg-orange-700 text-left transform hover:scale-105 hover:shadow-xl transition-all duration-200 border border-white/20">
               <h3 className="font-semibold">Support</h3>
               <p className="text-sm opacity-90">Get help with your account</p>
             </button>
