@@ -41,18 +41,18 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md animate-slide-up">
         <div className="text-center">
-          <img src="/Logo_GadgetBazar.png" alt="GadgetBazar" className="h-12 w-auto mx-auto" />
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+          <img src="/Logo_GadgetBazar.png" alt="GadgetBazar" className="h-12 w-auto mx-auto transform hover:scale-110 transition-transform duration-300" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 animate-fade-in">
             Sign in to your account
           </h2>
         </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md animate-scale-in">
+        <div className="bg-white/60 backdrop-blur-xl py-8 px-4 shadow-2xl rounded-3xl sm:px-10 border border-white/30 hover:shadow-3xl transition-shadow duration-300">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -66,7 +66,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="appearance-none block w-full px-3 py-2 bg-white/50 backdrop-blur-lg border border-white/30 rounded-2xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/80 transition-all duration-300 shadow-sm"
                   placeholder="Enter your email"
                 />
               </div>
@@ -84,7 +84,7 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="appearance-none block w-full px-3 py-2 bg-white/50 backdrop-blur-lg border border-white/30 rounded-2xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/80 transition-all duration-300 shadow-sm"
                   placeholder="Enter your password"
                 />
               </div>
@@ -94,7 +94,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={handleForgotPassword}
-                className="text-sm text-blue-600 hover:text-blue-500"
+                className="text-sm text-blue-600 hover:text-blue-500 transform hover:scale-105 transition-all duration-200"
               >
                 Forgot your password?
               </button>
@@ -103,7 +103,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full flex justify-center py-3 px-4 border border-white/20 rounded-2xl shadow-lg text-sm font-medium text-white bg-gradient-to-r from-blue-600/90 to-purple-600/90 backdrop-blur-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
               >
                 Sign in
               </button>
@@ -123,7 +123,7 @@ const Login = () => {
             <div className="mt-6">
               <button
                 onClick={handleGoogleLogin}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="w-full inline-flex justify-center py-3 px-4 bg-white/60 backdrop-blur-lg border border-white/30 rounded-2xl shadow-md text-sm font-medium text-gray-700 hover:bg-white/80 hover:shadow-lg transform hover:scale-105 transition-all duration-300"
               >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -139,7 +139,7 @@ const Login = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
-              <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500 transform hover:scale-105 transition-all duration-200 inline-block">
                 Sign up
               </Link>
             </p>
