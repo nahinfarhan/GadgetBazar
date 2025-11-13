@@ -65,7 +65,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16 animate-fade-in">
           {/* Logo */}
           <Link to="/" className="flex items-center transform hover:scale-105 transition-transform duration-300">
-            <img src="/Logo_GadgetBazar.png" alt="GadgetBazar" className="h-10 w-auto" />
+            <img src="/logo.png" alt="GadgetBazar" className="h-10 w-auto" />
           </Link>
 
           {/* Search Bar */}
