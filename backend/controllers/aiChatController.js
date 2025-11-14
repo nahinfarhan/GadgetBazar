@@ -76,19 +76,13 @@ When responding:
     // Extract ONLY products explicitly mentioned by AI
     let relatedProducts = [];
     if (aiResponse) {
-      // Find products where the full name or significant portion appears in AI response
       relatedProducts = allProducts.filter(p => {
         const response = aiResponse.toLowerCase();
         const productName = p.name.toLowerCase();
-        // Check if product name or key identifiers appear
-        const keyParts = productName.split(' ').filter(part => part.length > 4);
-        return keyParts.length > 0 && keyParts.every(part => response.includes(part));
+        const keyParts = productName.split(' ').filter(part => part.length > 3);
+        const matchCount = keyParts.filter(part => response.includes(part)).length;
+        return matchCount >= Math.min(2, keyParts.length);
       });
-      
-      // If no exact matches, don't show any products
-      if (relatedProducts.length === 0) {
-        relatedProducts = [];
-      }
     }
     
     if (!aiResponse) {
