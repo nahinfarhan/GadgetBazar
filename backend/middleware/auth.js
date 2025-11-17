@@ -2,30 +2,50 @@ const admin = require('firebase-admin');
 const path = require('path');
 const fs = require('fs');
 
-// Initialize Firebase Admin for user project
-const serviceAccountPath = path.join(__dirname, '../serviceAccountKey.json');
 let userApp, adminApp;
 
-if (fs.existsSync(serviceAccountPath)) {
+// Initialize Firebase Admin for user project
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  // Use environment variable (for Railway)
   userApp = admin.initializeApp({
-    credential: admin.credential.cert(require(serviceAccountPath)),
+    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
     storageBucket: 'gadgetbazar-3207a.appspot.com'
   }, 'user');
-  console.log('✓ User Firebase initialized');
+  console.log('✓ User Firebase initialized from env');
 } else {
-  console.warn('Warning: serviceAccountKey.json not found. User authentication will not work.');
+  // Use file (for local development)
+  const serviceAccountPath = path.join(__dirname, '../serviceAccountKey.json');
+  if (fs.existsSync(serviceAccountPath)) {
+    userApp = admin.initializeApp({
+      credential: admin.credential.cert(require(serviceAccountPath)),
+      storageBucket: 'gadgetbazar-3207a.appspot.com'
+    }, 'user');
+    console.log('✓ User Firebase initialized from file');
+  } else {
+    console.warn('Warning: serviceAccountKey.json not found. User authentication will not work.');
+  }
 }
 
 // Initialize Firebase Admin for admin project
-const adminServiceAccountPath = path.join(__dirname, '../adminServiceAccountKey.json');
-if (fs.existsSync(adminServiceAccountPath)) {
+if (process.env.ADMIN_FIREBASE_SERVICE_ACCOUNT) {
+  // Use environment variable (for Railway)
   adminApp = admin.initializeApp({
-    credential: admin.credential.cert(require(adminServiceAccountPath)),
+    credential: admin.credential.cert(JSON.parse(process.env.ADMIN_FIREBASE_SERVICE_ACCOUNT)),
     storageBucket: 'gadgetbazar-admin.firebasestorage.app'
   }, 'admin');
-  console.log('✓ Admin Firebase initialized');
+  console.log('✓ Admin Firebase initialized from env');
 } else {
-  console.warn('Warning: adminServiceAccountKey.json not found. Admin authentication will not work.');
+  // Use file (for local development)
+  const adminServiceAccountPath = path.join(__dirname, '../adminServiceAccountKey.json');
+  if (fs.existsSync(adminServiceAccountPath)) {
+    adminApp = admin.initializeApp({
+      credential: admin.credential.cert(require(adminServiceAccountPath)),
+      storageBucket: 'gadgetbazar-admin.firebasestorage.app'
+    }, 'admin');
+    console.log('✓ Admin Firebase initialized from file');
+  } else {
+    console.warn('Warning: adminServiceAccountKey.json not found. Admin authentication will not work.');
+  }
 }
 
 // Verify Firebase token middleware

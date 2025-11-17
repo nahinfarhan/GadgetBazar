@@ -2,7 +2,10 @@ const Groq = require('groq-sdk');
 const { Product, Category } = require('../models');
 const { Op } = require('sequelize');
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+let groq;
+if (process.env.GROQ_API_KEY) {
+  groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+}
 
 exports.aiChat = async (req, res) => {
   const { message } = req.body;
@@ -56,8 +59,11 @@ When responding:
 
     let aiResponse;
     
-    try {
-      const completion = await groq.chat.completions.create({
+    if (!groq) {
+      aiResponse = "Hello! I'm here to help you find electronics on GadgetBazar. What can I help you with?";
+    } else {
+      try {
+        const completion = await groq.chat.completions.create({
         messages: [
           { role: 'system', content: websiteContext },
           { role: 'user', content: message }
@@ -67,10 +73,11 @@ When responding:
         max_tokens: 300
       });
       
-      aiResponse = completion.choices[0]?.message?.content;
-    } catch (error) {
-      console.error('Groq API Error:', error);
-      throw error;
+        aiResponse = completion.choices[0]?.message?.content;
+      } catch (error) {
+        console.error('Groq API Error:', error);
+        throw error;
+      }
     }
     
     // Extract ONLY products explicitly mentioned by AI
