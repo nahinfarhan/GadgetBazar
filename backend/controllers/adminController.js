@@ -293,8 +293,34 @@ exports.updateOrderStatus = async (req, res) => {
       });
     }
 
+    const oldStatus = order.status;
     order.status = status;
     await order.save();
+
+    // Notify user about order status change
+    if (oldStatus !== status) {
+      const statusMessages = {
+        pending: 'Your order is pending confirmation',
+        processing: 'Your order is being processed',
+        shipped: 'Your order has been shipped',
+        delivered: 'Your order has been delivered',
+        cancelled: 'Your order has been cancelled'
+      };
+      
+      const productNames = await Promise.all(order.items.map(async (item) => {
+        const product = await Product.findByPk(item.productId);
+        return product ? product.name : 'Product';
+      }));
+      const productList = productNames.slice(0, 2).join(', ') + (productNames.length > 2 ? ` +${productNames.length - 2} more` : '');
+      
+      await Notification.create({
+        userId: order.userId,
+        type: 'order_status',
+        title: 'Order Status Updated',
+        message: `${productList}: ${statusMessages[status] || status}`,
+        data: { orderId: order.id, status }
+      });
+    }
 
     res.json({
       success: true,

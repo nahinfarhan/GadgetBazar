@@ -1,4 +1,4 @@
-const { Order, User, Product } = require('../models');
+const { Order, User, Product, Notification } = require('../models');
 
 exports.getOrders = async (req, res) => {
   try {
@@ -157,6 +157,18 @@ exports.createOrder = async (req, res) => {
       paymentMethod,
       paymentDetails: paymentDetails || {}
     });
+
+    // Notify admin about new order
+    const adminUsers = await User.findAll({ where: { role: 'admin' } });
+    for (const admin of adminUsers) {
+      await Notification.create({
+        userId: admin.id,
+        type: 'new_order',
+        title: 'New Order Received',
+        message: `Order #${order.id} placed by ${user.displayName || user.email} - BDT ${totalAmount}`,
+        data: { orderId: order.id }
+      });
+    }
 
     // Clear user's cart
     const { Cart } = require('../models');

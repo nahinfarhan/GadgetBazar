@@ -1,6 +1,7 @@
 node_modules/
 .env
 serviceAccountKey.json
+adminServiceAccountKey.json
 *.log
 .DS_Store
 uploads/

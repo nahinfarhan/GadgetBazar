@@ -35,7 +35,7 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white">
+      <div className="w-64 bg-gray-900 text-white fixed h-screen overflow-y-auto">
         <div className="p-6">
           <h2 className="text-2xl font-bold">Admin Panel</h2>
         </div>
@@ -68,7 +68,7 @@ const AdminLayout = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1">
+      <div className="flex-1 ml-64">
         {children}
       </div>
     </div>

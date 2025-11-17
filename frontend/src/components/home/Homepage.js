@@ -65,7 +65,7 @@ const Homepage = ({ user }) => {
           <div className="max-w-2xl relative z-10">
             <h1 className="text-4xl font-bold mb-4 animate-fade-in">Welcome to GadgetBazar</h1>
             <p className="text-xl mb-6 animate-fade-in" style={{animationDelay: '0.2s'}}>Discover the latest electronics and gadgets at unbeatable prices</p>
-            <button className="bg-white/90 backdrop-blur-lg text-blue-600 px-6 py-3 rounded-2xl font-semibold hover:bg-white transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+            <button onClick={() => navigate('/products')} className="bg-white/90 backdrop-blur-lg text-blue-600 px-6 py-3 rounded-2xl font-semibold hover:bg-white transform hover:scale-105 hover:shadow-xl transition-all duration-300">
               Shop Now
             </button>
           </div>

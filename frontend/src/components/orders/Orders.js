@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { apiCall } from '../../utils/api';
+import { useLocation } from 'react-router-dom';
 
 export default function Orders({ user }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (user) fetchOrders();
   }, [user]);
+
+  useEffect(() => {
+    if (location.state?.orderId && orders.length > 0) {
+      const order = orders.find(o => o.id === location.state.orderId);
+      if (order) setSelectedOrder(order);
+    }
+  }, [location.state, orders]);
 
   const fetchOrders = async () => {
     try {
