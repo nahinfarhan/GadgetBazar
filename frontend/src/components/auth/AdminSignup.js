@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../../config/firebase';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { adminAuth } from '../../config/adminFirebase';
 import { useNavigate } from 'react-router-dom';
+
+const googleProvider = new GoogleAuthProvider();
 
 const AdminSignup = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +21,7 @@ const AdminSignup = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(adminAuth, email, password);
       navigate('/admin');
     } catch (error) {
       setError(error.message);
@@ -28,7 +30,7 @@ const AdminSignup = () => {
 
   const handleGoogleSignup = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(adminAuth, googleProvider);
       navigate('/admin');
     } catch (error) {
       setError(error.message);
